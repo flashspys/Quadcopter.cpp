@@ -9,6 +9,7 @@
 #include <map>
 #include <memory>
 #include <iostream>
+#include <atomic>
 
 #include "PID.hpp"
 #include "IMUCalculation.hpp"
@@ -23,12 +24,12 @@ class Quadcopter {
 private:
     std::map<Input, double> inputs = {{Input::throttle, 0}, {Input::pitch, 0}, {Input::roll, 0}, {Input::yaw, 0}};
     std::map<Trim, double> trim = {{Trim::X, 0}, {Trim::Y, 0}};
-	std::map<Input, PID> pids = { {Input::roll, PID(1,0,0)}, {Input::pitch, PID(1,0,0)}, {Input::yaw, PID(1,0,0)} };
+	std::map<Input, PID> pids = { {Input::roll, PID(1.0,0.2,0)}, {Input::pitch, PID(1.0,0.2,0)}, {Input::yaw, PID(1.0,0,0)} };
 
     std::shared_ptr<UDPServer> sharedServer;
     MinIMU9 imu;
 
-    bool SHOULD_STABILIZE = false;
+    std::atomic<bool> SHOULD_STABILIZE;
 
     Quadcopter();
     void imuReset();
@@ -45,6 +46,9 @@ public:
     void startIO();
     void stabilize();
 
+
+    Quadcopter(Quadcopter const&) = delete;
+    void operator=(Quadcopter const&) = delete;
 
 };
 

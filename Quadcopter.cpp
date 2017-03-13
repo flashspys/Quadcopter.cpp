@@ -5,6 +5,7 @@
 #include "Quadcopter.hpp"
 
 #include <thread>
+#include <mutex>
 
 #include <boost/algorithm/string/classification.hpp> // Include boost::for is_any_of
 #include <boost/algorithm/string/split.hpp> // Include for boost::split
@@ -12,7 +13,7 @@
 
 #include "UDPServer.hpp"
 #include "Motor.hpp"
-
+#include "Log.hpp"
 
 Quadcopter::Quadcopter() {
 
@@ -148,12 +149,17 @@ void Quadcopter::stabilize() {
 
             //Motor::setSpeeds(frontLeftSpeed, frontRightSpeed, backLeftSpeed, backRightSpeed);
 
-            fprintf(stdout, "p\tr\ty\n");
-            fprintf(stdout, "%.2f\t%.2f\t%.2f\n", euler[0], euler[1], euler[2]);
-            fprintf(stdout, "%.2f\t%.2f\t%.2f\n", pitchAdjust, rollAdjust, yawAdjust);
-            fprintf(stdout, "%.2f, %.2f, %.2f %.2f\n", frontLeftSpeed, frontRightSpeed, backLeftSpeed, backRightSpeed);
+            Log::log("p\tr\ty");
+            Log::log("%.2f\t%.2f\t%.2f", euler[0], euler[1], euler[2]);
+            Log::log("%.2f\t%.2f\t%.2f", pitchAdjust, rollAdjust, yawAdjust);
+            Log::log("%.2f, %.2f, %.2f %.2f", frontLeftSpeed, frontRightSpeed, backLeftSpeed, backRightSpeed);
+
+            std::cout << std::endl;
+
         }
 
+
+        //Log::log("%d ms", millis()-start);
         // Ensure that each iteration of the loop takes at least x ms.
         // TODO: Use std::thread::sleep_until
         while (millis() - start < 30) {
