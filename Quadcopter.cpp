@@ -52,6 +52,9 @@ void Quadcopter::startIO() {
 
 void Quadcopter::startStabilize() {
 
+    this->pids[Input::roll].reset();
+    this->pids[Input::pitch].reset();
+
     this->SHOULD_STABILIZE = true;
 }
 
@@ -89,6 +92,12 @@ void Quadcopter::onMessage(UDPServer *server, std::string message) {
         this->startStabilize();
     } else if (command == "IMURESET") {
         this->imuReset();
+    } else if(command == "PIDRESET") {
+        this->pids[Input::roll].reset();
+        this->pids[Input::pitch].reset();
+    } else if(command == "PIDVALUES") {
+        this->pids[Input::roll].values(std::stod(parts[1]), std::stod(parts[2]), std::stod(parts[3]));
+        this->pids[Input::pitch].values(std::stod(parts[1]), std::stod(parts[2]), std::stod(parts[3]));
     }
     std::cout.flush();
 }
@@ -161,7 +170,7 @@ void Quadcopter::stabilize() {
 
         //Log::log("%d ms", millis()-start);
         // Ensure that each iteration of the loop takes at least x ms.
-        // TODO: Use std::thread::sleep_until
+        // TODO: Use std::thread::sleep_*
         while (millis() - start < 30) {
             usleep(1000);
         }

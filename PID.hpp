@@ -15,12 +15,14 @@ public:
 	}
 
 	double compute(double input, double target, double dt);
+    void reset();
+    void values(double p, double i, double d);
 
 private:
 	double p;
 	double i;
 	double d;
-	double i_error = 0;
+    double i_error = 0;
 	double lastError = 0;
 };
 
