@@ -13,8 +13,6 @@
 #include "Quadcopter.hpp"
 
 int main() {
-    std::cout << "Quadrocopter starting..." << std::endl;
-    Quadcopter quad = Quadcopter::sharedInstance();
-    quad.startIO();
-
+    std::cout << "[main.cpp] Quadrocopter starting..." << std::endl;
+    Quadcopter::sharedInstance().startIO();
 }

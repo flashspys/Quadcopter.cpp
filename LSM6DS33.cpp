@@ -12,9 +12,9 @@ using std::endl;
 /**
  *
  *
-    std::bitset<16> a( x);
-    std::bitset<16> b( y);
-    std::bitset<16> c( z);
+    std::bitset<16> a(x);
+    std::bitset<16> b(y);
+    std::bitset<16> c(z);
 
     std::cout << std::endl << a << "\t" << std::dec << x << std::endl << b << "\t" << std::dec << y << std::endl << c << "\t" << std::dec << z << std::endl;
 
@@ -40,6 +40,7 @@ std::vector<int> LSM6DS33::readAccel() {
     // Eliminate static noise
     y += 20;
 
+
     return {x,y,z};
 
 }
@@ -53,9 +54,9 @@ std::vector<int> LSM6DS33::readGyro() {
     int16_t z = (buffer[5] << 8 | buffer[4]);
 
     // Eliminate static noise
-    x -= 25;
+    x -= 16;
     y += 43;
-    z += 11;
+    z += 14;
 
     return {x,y,z};
 

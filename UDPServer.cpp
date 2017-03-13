@@ -29,8 +29,6 @@ void UDPServer::handle_receive(const boost::system::error_code& error,
     {
         std::string message(recv_buffer_.elems);
 
-        std::cout << "m: " << message;
-
         if (!error || error == boost::asio::error::message_size)
         {
             Quadcopter::sharedInstance().onMessage(this, message);

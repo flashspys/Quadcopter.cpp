@@ -8,7 +8,7 @@
 #include "pigpio.h"
 
 double checkBounces(double speed) {
-    return speed < 0.0 ? 0 : (speed > 1 ? 1 : speed);
+    return speed < 0.0 ? 0.0 : (speed > 1.0 ? 1.0 : speed);
 }
 
 using namespace Motor;
