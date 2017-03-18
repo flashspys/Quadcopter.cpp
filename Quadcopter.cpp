@@ -38,7 +38,7 @@ void Quadcopter::startIO() {
         std::cout << "Shared server is null" << std::endl;
     }
 
-    //Motor::aim();
+    Motor::aim();
 
     std::thread stabilize_thread([&] { this->stabilize(); });
     std::thread io_thread([&] { io_service.run(); });
@@ -156,7 +156,7 @@ void Quadcopter::stabilize() {
 
         if (this->SHOULD_STABILIZE) {
 
-            //Motor::setSpeeds(frontLeftSpeed, frontRightSpeed, backLeftSpeed, backRightSpeed);
+            Motor::setSpeeds(frontLeftSpeed, frontRightSpeed, backLeftSpeed, backRightSpeed);
 
             Log::log("p\tr\ty");
             Log::log("%.2f\t%.2f\t%.2f", euler[0], euler[1], euler[2]);
